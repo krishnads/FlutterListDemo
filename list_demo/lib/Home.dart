@@ -1,37 +1,53 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
 
-  final List listTypes;
+class Home extends StatefulWidget {
 
+  @override 
+  State<StatefulWidget> createState() => new HomeState();
+  
+}
+
+class HomeState extends State<Home> {
+
+  final List<String> listTypes = ['Basic list', 'Horizontal list', 'Grid list', 'List with different types of items'];
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('This is Basic List'),
+        title: new Text('Basic List With Tap Action'),
       ),
-      body: ListView(
-        padding: EdgeInsets.all(20),
-        children: <Widget>[
-          ListTile(
-            leading: Icon(Icons.view_list),
-            title: Text('Horizontal list'),
-          ),
-          ListTile(
-            leading: Icon(Icons.grid_on),
-            title: Text('Grid list'),
-          ),
-          ListTile(
-            leading: Icon(Icons.devices_other),
-            title: Text('list with different types of items'),
-          ),
-        ],
+      body: ListView.builder(
+        itemCount: listTypes.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+             leading: Icon(Icons.view_list),
+             title: Text(listTypes[index]),
+             onTap: () {
+               navigateTo(index);
+             },
+          );
+        },
       ),
     );
   }
-}
 
-// Create a horizontal list
-// Creating a Grid List
-// Creating lists with different types of items
+  void navigateTo(index) {
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/basic_list');
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/horizontal_list');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/grid_list');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/other_list');
+        break;
+      default:
+    }
+  }
+}
